@@ -66,9 +66,20 @@ puts school[:instructors][2][:subject]
 #hard_coded, sorry!
 
 school.each do |key, value|
-	puts value
+    puts key, value 
+  end
+
+school[:instructors].each do |array|
+    array.each do |name, attribute|
+      puts name, attribute
+  end
 end
-#Didn't finish 4i.
+
+school[:students].each do |array|
+    array.each do |name, attribute|
+      puts name, attribute
+  end
+end
 
 #######4. METHODS#######
 
@@ -124,9 +135,6 @@ class School
 	attr_accessor :name, :location, :instructors, :students
 	attr_reader :ranking
 
-	SCHOOLS = []
-
-
 	def initialize(name, location, ranking, students, instructors)
 		@name = name
 		@location = location
@@ -136,54 +144,48 @@ class School
 	end
 
 	def set_ranking(ranking)
+		@ranking = new_ranking
 
 	end
 
-	def add_student(school, student)
-		school[:students] << {:name => student}
+	def add_student(school, student, grade)
+		school[:students] << [student, grade]
 	end
 
-	def del_student(school, student)
-		school[:students].each do |name|
-		name.each do |key, value|
-			if value == student
-				name.delete[key]
-			end
-		  end
-	   end
-	end
-
-	def reset
-		SCHOOLS.reset
+	def del_student(school, delete_student)
+		school[:students].delete_if do |delete_student| 
+			delete_student = student 
+		end
 	end
 end
 
+
+SCHOOLS = []
+SCHOOLS << school
+
+def reset
+		SCHOOLS.clear
+	end
+
+
+
 ###########6. Classess##########
-#Didn't finish this QUESTION
 
 class Student
+	attr_accessor :name, :grade, :semester
 
-	def add_student(school, student)
-		school[:students] << {:name => student}
+	def initialize(name, grade, semester)
+		@name = name
+		@grade = grade
+		@semester = semester
 	end
-
-	def del_student(school, student)
-		school[:students].each do |name|
-		name.each do |key, value|
-			if value == student
-				name.delete[key]
-			end
-		  end
-	   end
-	end
-
 end
 
 ##########7. Self#############
 
 #7a. "hello Student"
 #7b. "Student"
-#7c. "nil"
+#7c. "nil" or Student Object (if that counts)
 #7d. "Student"
 #7e. "goodbye"
 
